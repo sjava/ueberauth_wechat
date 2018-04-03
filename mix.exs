@@ -25,7 +25,7 @@ defmodule UeberauthWechat.Mixfile do
   defp deps do
     [{:ueberauth, "~> 0.4"},
      {:oauth2, "~> 0.8"},
-     {:poison, "~> 2.0"},
+     {:poison, "~> 3.0"},
 
      # docs dependencies
      {:earmark, "~> 0.2", only: :dev},
