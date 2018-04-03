@@ -177,7 +177,8 @@ defmodule Ueberauth.Strategy.Wechat do
     }
   end
 
-  defp fetch_user(conn, token) do
+  defp fetch_user(conn, %OAuth2.AccessToken{access_token: access_token}) do
+    token = Poison.decode!(access_token)
     IO.puts(inspect(token))
     conn = put_private(conn, :wechat_token, token)
     fetch_user_url = "/userinfo?access_token=#{token.access_token}&openid=#{token.openid}"
