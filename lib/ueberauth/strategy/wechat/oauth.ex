@@ -13,7 +13,7 @@ defmodule Ueberauth.Strategy.Wechat.OAuth do
   @defaults [
     strategy: __MODULE__,
     site: "https://api.weixin.qq.com/sns",
-    authorize_url: "https://open.weixin.qq.com/connect/qrconnect",
+    authorize_url: "https://open.weixin.qq.com/connect/oauth2/authorize",
     token_url: "/oauth2/access_token",
     token_method: "get"
   ]
