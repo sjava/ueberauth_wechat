@@ -45,8 +45,12 @@ defmodule Ueberauth.Strategy.Wechat.OAuth do
   end
 
   def get(token, url, headers \\ [], opts \\ []) do
-    client(token: token)
-    |> OAuth2.Client.get(url, headers, opts)
+    temp =
+      client(token: token)
+      |> OAuth2.Client.get(url, headers, opts)
+
+    IO.inspect(temp)
+    temp
   end
 
   def get_token!(params \\ [], options \\ []) do
@@ -55,10 +59,9 @@ defmodule Ueberauth.Strategy.Wechat.OAuth do
     client_options = Keyword.get(options, :client_options, [])
     client = OAuth2.Client.get_token!(client(client_options), params, headers, options)
 
-    token =
-      client.token.access_token
-      |> Poison.decode!()
-      |> OAuth2.AccessToken.new()
+    client.token.access_token
+    |> Poison.decode!()
+    |> OAuth2.AccessToken.new()
 
     # Map.merge(
     #   token,
