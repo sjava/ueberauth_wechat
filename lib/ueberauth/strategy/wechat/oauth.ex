@@ -29,8 +29,9 @@ defmodule Ueberauth.Strategy.Wechat.OAuth do
   These options are only useful for usage outside the normal callback phase of Ueberauth.
   """
   def client(opts \\ []) do
-    opts = Keyword.merge(@defaults, Application.get_env(:ueberauth, Ueberauth.Strategy.Wechat.OAuth))
-    |> Keyword.merge(opts)
+    opts =
+      Keyword.merge(@defaults, Application.get_env(:ueberauth, Ueberauth.Strategy.Wechat.OAuth))
+      |> Keyword.merge(opts)
 
     OAuth2.Client.new(opts)
   end
@@ -44,7 +45,7 @@ defmodule Ueberauth.Strategy.Wechat.OAuth do
   end
 
   def get(token, url, headers \\ [], opts \\ []) do
-    client([token: token])
+    client(token: token)
     |> OAuth2.Client.get(url, headers, opts)
   end
 
@@ -68,8 +69,9 @@ defmodule Ueberauth.Strategy.Wechat.OAuth do
 
   def get_token(client, params, headers) do
     {code, params} = Keyword.pop(params, :code, client.params["code"])
+
     unless code do
-      raise OAuth2.Error, reason: "Missing required key `code` for `#{inspect __MODULE__}`"
+      raise OAuth2.Error, reason: "Missing required key `code` for `#{inspect(__MODULE__)}`"
     end
 
     client

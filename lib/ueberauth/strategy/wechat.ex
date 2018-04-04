@@ -177,11 +177,9 @@ defmodule Ueberauth.Strategy.Wechat do
     }
   end
 
-  defp fetch_user(conn, %OAuth2.AccessToken{access_token: access_token}) do
-    token = Poison.decode!(access_token)
-    IO.puts(inspect(token))
+  defp fetch_user(conn, token) do
     conn = put_private(conn, :wechat_token, token)
-    fetch_user_url = "/userinfo?access_token=#{token["access_token"]}&openid=#{token["openid"]}"
+    fetch_user_url = "/userinfo?access_token=#{token.access_token}&openid=#{token.openid}"
 
     case Ueberauth.Strategy.Wechat.OAuth.get(token, fetch_user_url) do
       {:ok, %OAuth2.Response{status_code: 401, body: _body}} ->
