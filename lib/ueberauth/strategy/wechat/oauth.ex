@@ -45,12 +45,8 @@ defmodule Ueberauth.Strategy.Wechat.OAuth do
   end
 
   def get(token, url, headers \\ [], opts \\ []) do
-    temp =
-      client(token: token)
-      |> OAuth2.Client.get(url, headers, opts)
-
-    IO.inspect(temp)
-    temp
+    client(token: token)
+    |> OAuth2.Client.get(url, headers, opts)
   end
 
   def get_token!(params \\ [], options \\ []) do
