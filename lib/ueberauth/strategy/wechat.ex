@@ -189,7 +189,7 @@ defmodule Ueberauth.Strategy.Wechat do
 
       {:ok, %OAuth2.Response{status_code: status_code, body: user}}
       when status_code in 200..399 ->
-        put_private(conn, :wechat_user, user)
+        put_private(conn, :wechat_user, Poison.decode!(user))
 
       {:error, %OAuth2.Error{reason: reason}} ->
         set_errors!(conn, [error("OAuth2", reason)])
