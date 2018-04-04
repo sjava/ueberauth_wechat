@@ -54,6 +54,7 @@ defmodule Ueberauth.Strategy.Wechat.OAuth do
     options = Keyword.get(options, :options, [])
     client_options = Keyword.get(options, :client_options, [])
     client = OAuth2.Client.get_token!(client(client_options), params, headers, options)
+    IO.inspect(client)
     client.token
   end
 
