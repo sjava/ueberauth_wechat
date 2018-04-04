@@ -104,6 +104,7 @@ defmodule Ueberauth.Strategy.Wechat do
   def handle_callback!(%Plug.Conn{params: %{"code" => code}} = conn) do
     module = option(conn, :oauth2_module)
     token = apply(module, :get_token!, [[code: code]])
+    IO.inspect(token)
 
     if token.access_token == nil do
       set_errors!(conn, [error(token.other_params["errcode"], token.other_params["errmsg"])])
