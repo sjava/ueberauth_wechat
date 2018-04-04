@@ -55,9 +55,15 @@ defmodule Ueberauth.Strategy.Wechat.OAuth do
     client_options = Keyword.get(options, :client_options, [])
     client = OAuth2.Client.get_token!(client(client_options), params, headers, options)
 
-    client.token.access_token
-    |> Poison.decode!()
-    |> OAuth2.AccessToken.new()
+    token =
+      client.token.access_token
+      |> Poison.decode!()
+      |> OAuth2.AccessToken.new()
+
+    Map.merge(
+      token,
+      Enum.into(token.other_params, %{other_params: %{}}, fn {k, v} -> {String.to_atom(k), v} end)
+    )
   end
 
   # Strategy Callbacks
