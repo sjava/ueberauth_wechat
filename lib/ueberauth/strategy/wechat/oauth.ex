@@ -60,10 +60,10 @@ defmodule Ueberauth.Strategy.Wechat.OAuth do
       |> Poison.decode!()
       |> OAuth2.AccessToken.new()
 
-    Map.merge(
-      token,
-      Enum.into(token.other_params, %{other_params: %{}}, fn {k, v} -> {String.to_atom(k), v} end)
-    )
+    # Map.merge(
+    #   token,
+    #   Enum.into(token.other_params, %{other_params: %{}}, fn {k, v} -> {String.to_atom(k), v} end)
+    # )
   end
 
   # Strategy Callbacks

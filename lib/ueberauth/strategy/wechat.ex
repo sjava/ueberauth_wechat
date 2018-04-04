@@ -104,7 +104,6 @@ defmodule Ueberauth.Strategy.Wechat do
   def handle_callback!(%Plug.Conn{params: %{"code" => code}} = conn) do
     module = option(conn, :oauth2_module)
     token = apply(module, :get_token!, [[code: code]])
-    IO.inspect(token)
 
     if token.access_token == nil do
       set_errors!(conn, [error(token.other_params["errcode"], token.other_params["errmsg"])])
@@ -180,7 +179,9 @@ defmodule Ueberauth.Strategy.Wechat do
 
   defp fetch_user(conn, token) do
     conn = put_private(conn, :wechat_token, token)
-    fetch_user_url = "/userinfo?access_token=#{token.access_token}&openid=#{token.openid}"
+
+    fetch_user_url =
+      "/userinfo?access_token=#{token.access_token}&openid=#{token.other_params["openid"]}"
 
     case Ueberauth.Strategy.Wechat.OAuth.get(token, fetch_user_url) do
       {:ok, %OAuth2.Response{status_code: 401, body: _body}} ->
